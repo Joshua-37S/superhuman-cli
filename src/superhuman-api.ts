@@ -5,6 +5,7 @@
  */
 
 import CDP from "chrome-remote-interface";
+import { getDefaultAppPath, getDefaultAutoLaunch, getDefaultCdpPort } from "./config";
 
 export interface SuperhumanConnection {
   client: CDP.Client;
@@ -28,23 +29,74 @@ export interface DraftState {
 /**
  * Check if Superhuman is running with CDP enabled
  */
-export async function isSuperhmanRunning(port = 9333): Promise<boolean> {
+export async function isSuperhumanRunning(port = getDefaultCdpPort()): Promise<boolean> {
   try {
     const targets = await CDP.List({ port });
-    return targets.some(t => t.url.includes("mail.superhuman.com"));
+    return targets.some(
+      (target) =>
+        target.url.includes("mail.superhuman.com") &&
+        target.type === "page" &&
+        !target.url.includes("background") &&
+        !target.url.includes("serviceworker")
+    );
   } catch {
     return false;
   }
 }
 
+// Backward-compatible alias for earlier typoed function name.
+export const isSuperhmanRunning = isSuperhumanRunning;
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function findMainPageTarget(
+  port: number,
+  attempts = 20,
+  intervalMs = 250
+): Promise<{ id: string; url: string; type: string } | null> {
+  for (let attempt = 0; attempt < attempts; attempt++) {
+    try {
+      const targets = await CDP.List({ port });
+      const mainPage = targets.find(
+        (target) =>
+          target.url.includes("mail.superhuman.com") &&
+          target.type === "page" &&
+          !target.url.includes("background") &&
+          !target.url.includes("serviceworker")
+      );
+
+      if (mainPage) {
+        return { id: mainPage.id, url: mainPage.url, type: mainPage.type };
+      }
+    } catch {
+      // CDP endpoint may still be booting; keep retrying.
+    }
+
+    if (attempt < attempts - 1) {
+      await sleep(intervalMs);
+    }
+  }
+
+  return null;
+}
+
 /**
  * Launch Superhuman with remote debugging enabled
  */
-export async function launchSuperhuman(port = 9333): Promise<boolean> {
-  const appPath = "/Applications/Superhuman.app/Contents/MacOS/Superhuman";
+export async function launchSuperhuman(
+  port = getDefaultCdpPort(),
+  appPath = getDefaultAppPath()
+): Promise<boolean> {
+  const appBinary = Bun.file(appPath);
+  if (!(await appBinary.exists())) {
+    console.error(`Superhuman binary not found at ${appPath}`);
+    return false;
+  }
 
   // Check if already running
-  if (await isSuperhmanRunning(port)) {
+  if (await isSuperhumanRunning(port)) {
     return true;
   }
 
@@ -59,11 +111,11 @@ export async function launchSuperhuman(port = 9333): Promise<boolean> {
 
     // Wait for Superhuman to be ready (up to 30 seconds)
     for (let i = 0; i < 30; i++) {
-      await new Promise(r => setTimeout(r, 1000));
-      if (await isSuperhmanRunning(port)) {
+      await sleep(1000);
+      if (await isSuperhumanRunning(port)) {
         console.log("Superhuman is ready");
         // Give it a bit more time to fully initialize
-        await new Promise(r => setTimeout(r, 2000));
+        await sleep(2000);
         return true;
       }
     }
@@ -78,47 +130,54 @@ export async function launchSuperhuman(port = 9333): Promise<boolean> {
 /**
  * Ensure Superhuman is running, launching it if necessary
  */
-export async function ensureSuperhuman(port = 9333): Promise<boolean> {
-  if (await isSuperhmanRunning(port)) {
+export async function ensureSuperhuman(
+  port = getDefaultCdpPort(),
+  appPath = getDefaultAppPath()
+): Promise<boolean> {
+  if (await isSuperhumanRunning(port)) {
     return true;
   }
-  return launchSuperhuman(port);
+  return launchSuperhuman(port, appPath);
 }
 
 /**
  * Find and connect to the Superhuman main page via CDP
  */
 export async function connectToSuperhuman(
-  port = 9333,
-  autoLaunch = true
+  port = getDefaultCdpPort(),
+  autoLaunch = getDefaultAutoLaunch()
 ): Promise<SuperhumanConnection | null> {
   // Auto-launch if not running
-  if (autoLaunch && !(await isSuperhmanRunning(port))) {
+  if (autoLaunch && !(await isSuperhumanRunning(port))) {
     const launched = await launchSuperhuman(port);
     if (!launched) {
       return null;
     }
   }
 
-  const targets = await CDP.List({ port });
-
-  const mainPage = targets.find(
-    (t) =>
-      t.url.includes("mail.superhuman.com") &&
-      !t.url.includes("background") &&
-      !t.url.includes("serviceworker") &&
-      t.type === "page"
-  );
+  const mainPage = await findMainPageTarget(port);
 
   if (!mainPage) {
-    console.error("Could not find Superhuman main page");
+    console.error(`Could not find Superhuman main page on CDP port ${port}`);
     return null;
   }
 
-  const client = await CDP({ target: mainPage.id, port });
+  let client: CDP.Client;
+  try {
+    client = await CDP({ target: mainPage.id, port });
+  } catch (error) {
+    console.error(`Failed to connect to Superhuman page target ${mainPage.id}: ${(error as Error).message}`);
+    return null;
+  }
 
   // Enable Page domain for navigation events
-  await client.Page.enable();
+  try {
+    await client.Page.enable();
+  } catch (error) {
+    console.error(`Connected to Superhuman, but failed to enable Page domain: ${(error as Error).message}`);
+    await client.close().catch(() => {});
+    return null;
+  }
 
   return {
     client,
@@ -370,8 +429,18 @@ export async function sendDraft(conn: SuperhumanConnection): Promise<boolean> {
  * Convert plain text to HTML paragraphs (returns as-is if already HTML)
  */
 export function textToHtml(text: string): string {
-  if (text.includes("<")) return text;
-  return `<p>${text.replace(/\n/g, "</p><p>")}</p>`;
+  const trimmed = text.trim();
+  if (/<\/?[a-z][^>]*>/i.test(trimmed)) {
+    return text;
+  }
+
+  const escaped = text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
+  const paragraphs = escaped.split(/\n\n+/).map((paragraph) => paragraph.replace(/\n/g, "<br>"));
+  return `<p>${paragraphs.join("</p><p>")}</p>`;
 }
 
 /**

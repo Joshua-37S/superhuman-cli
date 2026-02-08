@@ -87,16 +87,20 @@ export async function listInbox(
             });
           }
 
-          return threads;
+          return { ok: true, threads };
         } catch (e) {
-          return [];
+          return { ok: false, error: e?.message || "Failed to read inbox" };
         }
       })()
     `,
     returnByValue: true,
   });
 
-  return (result.result.value as InboxThread[]) || [];
+  const value = result.result.value as { ok?: boolean; threads?: InboxThread[]; error?: string } | null;
+  if (!value?.ok) {
+    throw new Error(value?.error || "Failed to list inbox threads");
+  }
+  return value.threads || [];
 }
 
 /**
@@ -119,9 +123,9 @@ export async function searchInbox(
             ["INBOX", { limit: ${limit}, filters: [], query: ${JSON.stringify(query)} }]
           );
 
-          if (!response?.threads) return [];
+          if (!response?.threads) return { ok: true, threads: [] };
 
-          return response.threads.map(t => {
+          const threads = response.threads.map(t => {
             // Thread data is nested in json property
             const thread = t.json || t;
             const messages = thread.messages || [];
@@ -140,8 +144,9 @@ export async function searchInbox(
               messageCount: messages.length,
             };
           });
+          return { ok: true, threads };
         } catch (e) {
-          return [];
+          return { ok: false, error: e?.message || "Failed to search inbox" };
         }
       })()
     `,
@@ -149,5 +154,9 @@ export async function searchInbox(
     awaitPromise: true,
   });
 
-  return (result.result.value as InboxThread[]) || [];
+  const value = result.result.value as { ok?: boolean; threads?: InboxThread[]; error?: string } | null;
+  if (!value?.ok) {
+    throw new Error(value?.error || "Failed to search inbox");
+  }
+  return value.threads || [];
 }

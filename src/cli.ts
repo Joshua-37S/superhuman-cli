@@ -44,12 +44,14 @@ import {
   type CreateEventInput,
   type UpdateEventInput,
 } from "./calendar";
+import { getDefaultAppPath, getDefaultCdpPort } from "./config";
+import { CliParseError, parseArgs, type CliOptions } from "./cli-options";
 
 const VERSION = "0.1.0";
-const CDP_PORT = 9333;
+const DEFAULT_CDP_PORT = getDefaultCdpPort();
+const DEFAULT_APP_PATH = getDefaultAppPath();
 
-// ANSI colors
-const colors = {
+const ansiColors = {
   reset: "\x1b[0m",
   bold: "\x1b[1m",
   dim: "\x1b[2m",
@@ -60,6 +62,13 @@ const colors = {
   magenta: "\x1b[35m",
   cyan: "\x1b[36m",
 };
+const colors = { ...ansiColors };
+
+function setColorEnabled(enabled: boolean) {
+  for (const key of Object.keys(ansiColors) as Array<keyof typeof ansiColors>) {
+    colors[key] = enabled ? ansiColors[key] : "";
+  }
+}
 
 function log(message: string) {
   console.log(message);
@@ -97,6 +106,60 @@ export function formatAccountsList(accounts: Account[]): string {
  */
 export function formatAccountsJson(accounts: Account[]): string {
   return JSON.stringify(accounts);
+}
+
+function emitJson(payload: unknown) {
+  console.log(JSON.stringify(payload, null, 2));
+}
+
+function emitCommandJson(
+  options: CliOptions,
+  ok: boolean,
+  data: Record<string, unknown> = {}
+) {
+  if (!options.json) {
+    return;
+  }
+
+  emitJson({
+    ok,
+    command: options.command,
+    dryRun: options.dryRun || undefined,
+    ...data,
+  });
+}
+
+function isBulkDestructiveCommand(command: string): boolean {
+  return (
+    command === "archive" ||
+    command === "delete" ||
+    command === "mark-read" ||
+    command === "mark-unread" ||
+    command === "add-label" ||
+    command === "remove-label" ||
+    command === "star" ||
+    command === "unstar" ||
+    command === "snooze" ||
+    command === "unsnooze"
+  );
+}
+
+function ensureBulkConfirmation(options: CliOptions): void {
+  if (!isBulkDestructiveCommand(options.command) || options.threadIds.length <= 1) {
+    return;
+  }
+  if (options.confirm || options.dryRun) {
+    return;
+  }
+
+  const message = `Refusing to run ${options.command} on ${options.threadIds.length} threads without --yes`;
+  if (options.json) {
+    emitCommandJson(options, false, { error: message, threadIds: options.threadIds });
+  } else {
+    error(message);
+    info("Use --yes to execute, or --dry-run to preview.");
+  }
+  process.exit(1);
 }
 
 function printHelp() {
@@ -164,7 +227,12 @@ ${colors.bold}OPTIONS${colors.reset}
   --duration <mins>  Event duration in minutes (default: 30)
   --title <text>     Event title (for calendar-create/update)
   --event <id>       Event ID (for calendar-update/delete)
-  --port <number>    CDP port (default: ${CDP_PORT})
+  --port <number>    CDP port (default: ${DEFAULT_CDP_PORT} or $SUPERHUMAN_CDP_PORT)
+  --yes              Confirm bulk destructive operations
+  --dry-run          Preview destructive operations without changing data
+  --no-auto-launch   Do not auto-launch Superhuman when disconnected
+  --no-color         Disable ANSI colors
+  --version, -v      Show version
 
 ${colors.bold}EXAMPLES${colors.reset}
   ${colors.dim}# List linked accounts${colors.reset}
@@ -272,272 +340,26 @@ ${colors.bold}EXAMPLES${colors.reset}
 
 ${colors.bold}REQUIREMENTS${colors.reset}
   Superhuman must be running with remote debugging enabled:
-  ${colors.dim}/Applications/Superhuman.app/Contents/MacOS/Superhuman --remote-debugging-port=${CDP_PORT}${colors.reset}
+  ${colors.dim}${DEFAULT_APP_PATH} --remote-debugging-port=${DEFAULT_CDP_PORT}${colors.reset}
 `);
 }
 
-interface CliOptions {
-  command: string;
-  to: string[];
-  cc: string[];
-  bcc: string[];
-  subject: string;
-  body: string;
-  html: string;
-  port: number;
-  // inbox/search/read options
-  limit: number;
-  query: string;
-  threadId: string;
-  threadIds: string[]; // for bulk operations (archive/delete)
-  json: boolean;
-  // account switching
-  accountArg: string; // index or email for account command
-  // reply/forward options
-  send: boolean; // send immediately instead of saving as draft
-  // label options
-  labelId: string; // label ID for add-label/remove-label
-  // snooze options
-  snoozeUntil: string; // time to snooze until (preset or ISO datetime)
-  // attachment options
-  outputPath: string; // output directory or file path for downloads
-  attachmentId: string; // specific attachment ID for single download
-  messageId: string; // message ID for single attachment download
-  // calendar options
-  calendarDate: string; // date for calendar listing (YYYY-MM-DD or "today", "tomorrow")
-  calendarRange: number; // number of days to show
-  allAccounts: boolean; // query all accounts for calendar
-  eventStart: string; // event start time
-  eventEnd: string; // event end time
-  eventDuration: number; // event duration in minutes
-  eventTitle: string; // event title
-  eventId: string; // event ID for update/delete
-}
-
-function parseArgs(args: string[]): CliOptions {
-  const options: CliOptions = {
-    command: "",
-    to: [],
-    cc: [],
-    bcc: [],
-    subject: "",
-    body: "",
-    html: "",
-    port: CDP_PORT,
-    limit: 10,
-    query: "",
-    threadId: "",
-    threadIds: [],
-    json: false,
-    accountArg: "",
-    send: false,
-    labelId: "",
-    snoozeUntil: "",
-    outputPath: "",
-    attachmentId: "",
-    messageId: "",
-    calendarDate: "",
-    calendarRange: 1,
-    allAccounts: false,
-    eventStart: "",
-    eventEnd: "",
-    eventDuration: 30,
-    eventTitle: "",
-    eventId: "",
-  };
-
-  let i = 0;
-  while (i < args.length) {
-    const arg = args[i];
-
-    if (arg.startsWith("--")) {
-      const key = arg.slice(2);
-      const value = args[i + 1];
-
-      switch (key) {
-        case "to":
-          options.to.push(value);
-          i += 2;
-          break;
-        case "cc":
-          options.cc.push(value);
-          i += 2;
-          break;
-        case "bcc":
-          options.bcc.push(value);
-          i += 2;
-          break;
-        case "subject":
-          options.subject = value;
-          i += 2;
-          break;
-        case "body":
-          options.body = value;
-          i += 2;
-          break;
-        case "html":
-          options.html = value;
-          i += 2;
-          break;
-        case "port":
-          options.port = parseInt(value, 10);
-          i += 2;
-          break;
-        case "help":
-          options.command = "help";
-          i += 1;
-          break;
-        case "limit":
-          options.limit = parseInt(value, 10);
-          i += 2;
-          break;
-        case "query":
-          options.query = value;
-          i += 2;
-          break;
-        case "thread":
-          options.threadId = value;
-          i += 2;
-          break;
-        case "json":
-          options.json = true;
-          i += 1;
-          break;
-        case "send":
-          options.send = true;
-          i += 1;
-          break;
-        case "label":
-          options.labelId = value;
-          i += 2;
-          break;
-        case "until":
-          options.snoozeUntil = value;
-          i += 2;
-          break;
-        case "output":
-          options.outputPath = value;
-          i += 2;
-          break;
-        case "attachment":
-          options.attachmentId = value;
-          i += 2;
-          break;
-        case "message":
-          options.messageId = value;
-          i += 2;
-          break;
-        case "date":
-          options.calendarDate = value;
-          i += 2;
-          break;
-        case "range":
-          options.calendarRange = parseInt(value, 10);
-          i += 2;
-          break;
-        case "all-accounts":
-          options.allAccounts = true;
-          i++;
-          break;
-        case "start":
-          options.eventStart = value;
-          i += 2;
-          break;
-        case "end":
-          options.eventEnd = value;
-          i += 2;
-          break;
-        case "duration":
-          options.eventDuration = parseInt(value, 10);
-          i += 2;
-          break;
-        case "title":
-          options.eventTitle = value;
-          i += 2;
-          break;
-        case "event":
-          options.eventId = value;
-          i += 2;
-          break;
-        default:
-          error(`Unknown option: ${arg}`);
-          process.exit(1);
-      }
-    } else if (!options.command) {
-      options.command = arg;
-      i += 1;
-    } else if (options.command === "search" && !options.query) {
-      // Allow search query as positional argument
-      options.query = arg;
-      i += 1;
-    } else if (options.command === "read" && !options.threadId) {
-      // Allow thread ID as positional argument
-      options.threadId = arg;
-      i += 1;
-    } else if (options.command === "reply" && !options.threadId) {
-      // Allow thread ID as positional argument for reply
-      options.threadId = arg;
-      i += 1;
-    } else if (options.command === "reply-all" && !options.threadId) {
-      // Allow thread ID as positional argument for reply-all
-      options.threadId = arg;
-      i += 1;
-    } else if (options.command === "forward" && !options.threadId) {
-      // Allow thread ID as positional argument for forward
-      options.threadId = arg;
-      i += 1;
-    } else if (options.command === "account" && !options.accountArg) {
-      // Allow account index or email as positional argument
-      options.accountArg = arg;
-      i += 1;
-    } else if (
-      options.command === "archive" ||
-      options.command === "delete" ||
-      options.command === "mark-read" ||
-      options.command === "mark-unread" ||
-      options.command === "add-label" ||
-      options.command === "remove-label" ||
-      options.command === "star" ||
-      options.command === "unstar" ||
-      options.command === "snooze" ||
-      options.command === "unsnooze"
-    ) {
-      // Collect multiple thread IDs for bulk operations
-      options.threadIds.push(arg);
-      i += 1;
-    } else if (options.command === "get-labels" && !options.threadId) {
-      // Allow thread ID as positional argument for get-labels
-      options.threadId = arg;
-      i += 1;
-    } else if (options.command === "attachments" && !options.threadId) {
-      // Allow thread ID as positional argument for attachments
-      options.threadId = arg;
-      i += 1;
-    } else if (options.command === "download" && !options.threadId && !options.attachmentId) {
-      // Allow thread ID as positional argument for download (when not using --attachment)
-      options.threadId = arg;
-      i += 1;
-    } else {
-      error(`Unexpected argument: ${arg}`);
-      process.exit(1);
-    }
-  }
-
-  return options;
-}
-
-async function checkConnection(port: number): Promise<SuperhumanConnection | null> {
+async function checkConnection(port: number, autoLaunch: boolean): Promise<SuperhumanConnection | null> {
   try {
-    const conn = await connectToSuperhuman(port, true); // auto-launch enabled
+    const conn = await connectToSuperhuman(port, autoLaunch);
     if (!conn) {
       error("Could not connect to Superhuman");
-      info("Superhuman may not be installed or failed to launch");
+      if (!autoLaunch) {
+        info(`Launch Superhuman manually or rerun without --no-auto-launch`);
+      } else {
+        info(`Superhuman may not be installed at ${DEFAULT_APP_PATH}`);
+      }
       return null;
     }
     return conn;
   } catch (e) {
     error(`Connection failed: ${(e as Error).message}`);
-    info("Superhuman may not be installed at /Applications/Superhuman.app");
+    info(`Superhuman may not be installed at ${DEFAULT_APP_PATH}`);
     return null;
   }
 }
@@ -545,7 +367,7 @@ async function checkConnection(port: number): Promise<SuperhumanConnection | nul
 async function cmdStatus(options: CliOptions) {
   info(`Checking connection to Superhuman on port ${options.port}...`);
 
-  const conn = await checkConnection(options.port);
+  const conn = await checkConnection(options.port, options.autoLaunch);
   if (!conn) {
     process.exit(1);
   }
@@ -554,6 +376,16 @@ async function cmdStatus(options: CliOptions) {
 
   // Get current state
   const state = await getDraftState(conn);
+  if (options.json) {
+    emitCommandJson(options, true, {
+      connected: true,
+      port: options.port,
+      draft: state,
+    });
+    await disconnect(conn);
+    return;
+  }
+
   if (state) {
     log(`\n${colors.bold}Current compose state:${colors.reset}`);
     log(`  Draft ID: ${state.id}`);
@@ -568,13 +400,13 @@ async function cmdStatus(options: CliOptions) {
   await disconnect(conn);
 }
 
-async function cmdCompose(options: CliOptions, keepOpen = true) {
+async function cmdCompose(options: CliOptions, keepOpen = true, suppressJson = false) {
   if (options.to.length === 0) {
     error("At least one recipient is required (--to)");
     process.exit(1);
   }
 
-  const conn = await checkConnection(options.port);
+  const conn = await checkConnection(options.port, options.autoLaunch);
   if (!conn) {
     process.exit(1);
   }
@@ -589,9 +421,11 @@ async function cmdCompose(options: CliOptions, keepOpen = true) {
   success(`Compose opened (${draftKey})`);
 
   // Add recipients
+  const recipientResults: Array<{ email: string; success: boolean }> = [];
   for (const email of options.to) {
     info(`Adding recipient: ${email}`);
     const added = await addRecipient(conn, email);
+    recipientResults.push({ email, success: added });
     if (added) {
       success(`Added: ${email}`);
     } else {
@@ -600,18 +434,28 @@ async function cmdCompose(options: CliOptions, keepOpen = true) {
   }
 
   // Set subject
+  let subjectSet = true;
   if (options.subject) {
     info(`Setting subject: ${options.subject}`);
-    await setSubject(conn, options.subject);
-    success("Subject set");
+    subjectSet = await setSubject(conn, options.subject);
+    if (subjectSet) {
+      success("Subject set");
+    } else {
+      error("Failed to set subject");
+    }
   }
 
   // Set body
   const bodyContent = options.html || options.body;
+  let bodySet = true;
   if (bodyContent) {
     info("Setting body...");
-    await setBody(conn, textToHtml(bodyContent));
-    success("Body set");
+    bodySet = await setBody(conn, textToHtml(bodyContent));
+    if (bodySet) {
+      success("Body set");
+    } else {
+      error("Failed to set body");
+    }
   }
 
   // Get final state
@@ -627,26 +471,54 @@ async function cmdCompose(options: CliOptions, keepOpen = true) {
     await closeCompose(conn);
   }
 
+  const failedRecipients = recipientResults.filter((r) => !r.success);
+  const ok = failedRecipients.length === 0 && subjectSet && bodySet;
+
+  if (options.json && !suppressJson) {
+    emitCommandJson(options, ok, {
+      draftId: draftKey,
+      recipients: recipientResults,
+      subjectSet,
+      bodySet,
+      draft: state,
+      keepOpen,
+    });
+  }
+
+  if (!ok) {
+    process.exitCode = 1;
+  }
+
   await disconnect(conn);
   return state;
 }
 
 async function cmdDraft(options: CliOptions) {
-  const state = await cmdCompose(options, true);
+  const state = await cmdCompose(options, true, true);
 
   if (!state) {
     process.exit(1);
   }
 
   // Reconnect to save
-  const conn = await checkConnection(options.port);
+  const conn = await checkConnection(options.port, options.autoLaunch);
   if (!conn) {
     process.exit(1);
   }
 
   info("Saving draft...");
-  await saveDraft(conn);
-  success("Draft saved");
+  const saved = await saveDraft(conn);
+  if (saved) {
+    success("Draft saved");
+  } else {
+    error("Failed to save draft");
+    process.exitCode = 1;
+  }
+
+  emitCommandJson(options, saved, {
+    draftId: state.id,
+    saved,
+  });
 
   await disconnect(conn);
 }
@@ -657,7 +529,7 @@ async function cmdSend(options: CliOptions) {
     process.exit(1);
   }
 
-  const conn = await checkConnection(options.port);
+  const conn = await checkConnection(options.port, options.autoLaunch);
   if (!conn) {
     process.exit(1);
   }
@@ -694,7 +566,14 @@ async function cmdSend(options: CliOptions) {
     success("Email sent!");
   } else {
     error("Failed to send email");
+    process.exitCode = 1;
   }
+
+  emitCommandJson(options, sent, {
+    sent,
+    draftId: draftKey,
+    to: options.to,
+  });
 
   await disconnect(conn);
 }
@@ -717,12 +596,24 @@ function truncate(str: string | null | undefined, maxLen: number): string {
 }
 
 async function cmdInbox(options: CliOptions) {
-  const conn = await checkConnection(options.port);
+  const conn = await checkConnection(options.port, options.autoLaunch);
   if (!conn) {
     process.exit(1);
   }
 
-  const threads = await listInbox(conn, { limit: options.limit });
+  let threads: Awaited<ReturnType<typeof listInbox>>;
+  try {
+    threads = await listInbox(conn, { limit: options.limit });
+  } catch (e) {
+    const message = (e as Error).message;
+    if (options.json) {
+      emitCommandJson(options, false, { error: message });
+    } else {
+      error(`Failed to list inbox: ${message}`);
+    }
+    await disconnect(conn);
+    process.exit(1);
+  }
 
   if (options.json) {
     console.log(JSON.stringify(threads, null, 2));
@@ -755,15 +646,27 @@ async function cmdSearch(options: CliOptions) {
     process.exit(1);
   }
 
-  const conn = await checkConnection(options.port);
+  const conn = await checkConnection(options.port, options.autoLaunch);
   if (!conn) {
     process.exit(1);
   }
 
-  const threads = await searchInbox(conn, {
-    query: options.query,
-    limit: options.limit,
-  });
+  let threads: Awaited<ReturnType<typeof searchInbox>>;
+  try {
+    threads = await searchInbox(conn, {
+      query: options.query,
+      limit: options.limit,
+    });
+  } catch (e) {
+    const message = (e as Error).message;
+    if (options.json) {
+      emitCommandJson(options, false, { error: message, query: options.query });
+    } else {
+      error(`Search failed: ${message}`);
+    }
+    await disconnect(conn);
+    process.exit(1);
+  }
 
   if (options.json) {
     console.log(JSON.stringify(threads, null, 2));
@@ -796,12 +699,24 @@ async function cmdRead(options: CliOptions) {
     process.exit(1);
   }
 
-  const conn = await checkConnection(options.port);
+  const conn = await checkConnection(options.port, options.autoLaunch);
   if (!conn) {
     process.exit(1);
   }
 
-  const messages = await readThread(conn, options.threadId);
+  let messages: Awaited<ReturnType<typeof readThread>>;
+  try {
+    messages = await readThread(conn, options.threadId);
+  } catch (e) {
+    const message = (e as Error).message;
+    if (options.json) {
+      emitCommandJson(options, false, { error: message, threadId: options.threadId });
+    } else {
+      error(`Failed to read thread ${options.threadId}: ${message}`);
+    }
+    await disconnect(conn);
+    process.exit(1);
+  }
 
   if (options.json) {
     console.log(JSON.stringify(messages, null, 2));
@@ -841,7 +756,7 @@ async function cmdReply(options: CliOptions) {
     process.exit(1);
   }
 
-  const conn = await checkConnection(options.port);
+  const conn = await checkConnection(options.port, options.autoLaunch);
   if (!conn) {
     process.exit(1);
   }
@@ -860,7 +775,15 @@ async function cmdReply(options: CliOptions) {
     }
   } else {
     error(result.error || "Failed to create reply");
+    process.exitCode = 1;
   }
+
+  emitCommandJson(options, result.success, {
+    threadId: options.threadId,
+    sent: options.send,
+    draftId: result.draftId,
+    error: result.error,
+  });
 
   await disconnect(conn);
 }
@@ -872,7 +795,7 @@ async function cmdReplyAll(options: CliOptions) {
     process.exit(1);
   }
 
-  const conn = await checkConnection(options.port);
+  const conn = await checkConnection(options.port, options.autoLaunch);
   if (!conn) {
     process.exit(1);
   }
@@ -891,7 +814,15 @@ async function cmdReplyAll(options: CliOptions) {
     }
   } else {
     error(result.error || "Failed to create reply-all");
+    process.exitCode = 1;
   }
+
+  emitCommandJson(options, result.success, {
+    threadId: options.threadId,
+    sent: options.send,
+    draftId: result.draftId,
+    error: result.error,
+  });
 
   await disconnect(conn);
 }
@@ -909,7 +840,7 @@ async function cmdForward(options: CliOptions) {
     process.exit(1);
   }
 
-  const conn = await checkConnection(options.port);
+  const conn = await checkConnection(options.port, options.autoLaunch);
   if (!conn) {
     process.exit(1);
   }
@@ -929,145 +860,151 @@ async function cmdForward(options: CliOptions) {
     }
   } else {
     error(result.error || "Failed to create forward");
+    process.exitCode = 1;
   }
+
+  emitCommandJson(options, result.success, {
+    threadId: options.threadId,
+    to: toEmail,
+    sent: options.send,
+    draftId: result.draftId,
+    error: result.error,
+  });
+
+  await disconnect(conn);
+}
+
+interface ThreadActionResult {
+  success: boolean;
+  error?: string;
+}
+
+interface ThreadActionConfig {
+  usage: string;
+  summaryVerb: string;
+  dryRunVerb: string;
+  onSuccess: (threadId: string) => string;
+  onFailure: (threadId: string, error?: string) => string;
+  run: (conn: SuperhumanConnection, threadId: string) => Promise<ThreadActionResult>;
+  extraJson?: Record<string, unknown>;
+}
+
+async function runThreadActionCommand(options: CliOptions, config: ThreadActionConfig) {
+  if (options.threadIds.length === 0) {
+    error("At least one thread ID is required");
+    console.log(config.usage);
+    process.exit(1);
+  }
+
+  if (options.dryRun) {
+    for (const threadId of options.threadIds) {
+      info(`[dry-run] Would ${config.dryRunVerb}: ${threadId}`);
+    }
+    emitCommandJson(options, true, {
+      summary: {
+        total: options.threadIds.length,
+        successCount: options.threadIds.length,
+        failCount: 0,
+      },
+      results: options.threadIds.map((threadId) => ({
+        threadId,
+        success: true,
+        dryRun: true,
+      })),
+      ...config.extraJson,
+    });
+    return;
+  }
+
+  const conn = await checkConnection(options.port, options.autoLaunch);
+  if (!conn) {
+    process.exit(1);
+  }
+
+  let successCount = 0;
+  let failCount = 0;
+  const results: Array<{ threadId: string; success: boolean; error?: string }> = [];
+
+  for (const threadId of options.threadIds) {
+    const result = await config.run(conn, threadId);
+    if (result.success) {
+      success(config.onSuccess(threadId));
+      successCount++;
+      results.push({ threadId, success: true });
+    } else {
+      error(config.onFailure(threadId, result.error));
+      failCount++;
+      results.push({ threadId, success: false, error: result.error });
+    }
+  }
+
+  if (options.threadIds.length > 1 && !options.json) {
+    log(`\n${successCount} ${config.summaryVerb}, ${failCount} failed`);
+  }
+
+  if (failCount > 0) {
+    process.exitCode = 1;
+  }
+
+  emitCommandJson(options, failCount === 0, {
+    summary: {
+      total: options.threadIds.length,
+      successCount,
+      failCount,
+    },
+    results,
+    ...config.extraJson,
+  });
 
   await disconnect(conn);
 }
 
 async function cmdArchive(options: CliOptions) {
-  if (options.threadIds.length === 0) {
-    error("At least one thread ID is required");
-    console.log(`Usage: superhuman archive <thread-id> [thread-id...]`);
-    process.exit(1);
-  }
-
-  const conn = await checkConnection(options.port);
-  if (!conn) {
-    process.exit(1);
-  }
-
-  let successCount = 0;
-  let failCount = 0;
-
-  for (const threadId of options.threadIds) {
-    const result = await archiveThread(conn, threadId);
-    if (result.success) {
-      success(`Archived: ${threadId}`);
-      successCount++;
-    } else {
-      error(`Failed to archive: ${threadId}`);
-      failCount++;
-    }
-  }
-
-  if (options.threadIds.length > 1) {
-    log(`\n${successCount} archived, ${failCount} failed`);
-  }
-
-  await disconnect(conn);
+  await runThreadActionCommand(options, {
+    usage: "Usage: superhuman archive <thread-id> [thread-id...] [--yes] [--dry-run]",
+    summaryVerb: "archived",
+    dryRunVerb: "archive",
+    onSuccess: (threadId) => `Archived: ${threadId}`,
+    onFailure: (threadId, opError) => `Failed to archive: ${threadId}${opError ? ` (${opError})` : ""}`,
+    run: archiveThread,
+  });
 }
 
 async function cmdDelete(options: CliOptions) {
-  if (options.threadIds.length === 0) {
-    error("At least one thread ID is required");
-    console.log(`Usage: superhuman delete <thread-id> [thread-id...]`);
-    process.exit(1);
-  }
-
-  const conn = await checkConnection(options.port);
-  if (!conn) {
-    process.exit(1);
-  }
-
-  let successCount = 0;
-  let failCount = 0;
-
-  for (const threadId of options.threadIds) {
-    const result = await deleteThread(conn, threadId);
-    if (result.success) {
-      success(`Deleted: ${threadId}`);
-      successCount++;
-    } else {
-      error(`Failed to delete: ${threadId}`);
-      failCount++;
-    }
-  }
-
-  if (options.threadIds.length > 1) {
-    log(`\n${successCount} deleted, ${failCount} failed`);
-  }
-
-  await disconnect(conn);
+  await runThreadActionCommand(options, {
+    usage: "Usage: superhuman delete <thread-id> [thread-id...] [--yes] [--dry-run]",
+    summaryVerb: "deleted",
+    dryRunVerb: "delete",
+    onSuccess: (threadId) => `Deleted: ${threadId}`,
+    onFailure: (threadId, opError) => `Failed to delete: ${threadId}${opError ? ` (${opError})` : ""}`,
+    run: deleteThread,
+  });
 }
 
 async function cmdMarkRead(options: CliOptions) {
-  if (options.threadIds.length === 0) {
-    error("At least one thread ID is required");
-    console.log(`Usage: superhuman mark-read <thread-id> [thread-id...]`);
-    process.exit(1);
-  }
-
-  const conn = await checkConnection(options.port);
-  if (!conn) {
-    process.exit(1);
-  }
-
-  let successCount = 0;
-  let failCount = 0;
-
-  for (const threadId of options.threadIds) {
-    const result = await markAsRead(conn, threadId);
-    if (result.success) {
-      success(`Marked as read: ${threadId}`);
-      successCount++;
-    } else {
-      error(`Failed to mark as read: ${threadId}${result.error ? ` (${result.error})` : ""}`);
-      failCount++;
-    }
-  }
-
-  if (options.threadIds.length > 1) {
-    log(`\n${successCount} marked as read, ${failCount} failed`);
-  }
-
-  await disconnect(conn);
+  await runThreadActionCommand(options, {
+    usage: "Usage: superhuman mark-read <thread-id> [thread-id...] [--yes] [--dry-run]",
+    summaryVerb: "marked as read",
+    dryRunVerb: "mark as read",
+    onSuccess: (threadId) => `Marked as read: ${threadId}`,
+    onFailure: (threadId, opError) => `Failed to mark as read: ${threadId}${opError ? ` (${opError})` : ""}`,
+    run: markAsRead,
+  });
 }
 
 async function cmdMarkUnread(options: CliOptions) {
-  if (options.threadIds.length === 0) {
-    error("At least one thread ID is required");
-    console.log(`Usage: superhuman mark-unread <thread-id> [thread-id...]`);
-    process.exit(1);
-  }
-
-  const conn = await checkConnection(options.port);
-  if (!conn) {
-    process.exit(1);
-  }
-
-  let successCount = 0;
-  let failCount = 0;
-
-  for (const threadId of options.threadIds) {
-    const result = await markAsUnread(conn, threadId);
-    if (result.success) {
-      success(`Marked as unread: ${threadId}`);
-      successCount++;
-    } else {
-      error(`Failed to mark as unread: ${threadId}${result.error ? ` (${result.error})` : ""}`);
-      failCount++;
-    }
-  }
-
-  if (options.threadIds.length > 1) {
-    log(`\n${successCount} marked as unread, ${failCount} failed`);
-  }
-
-  await disconnect(conn);
+  await runThreadActionCommand(options, {
+    usage: "Usage: superhuman mark-unread <thread-id> [thread-id...] [--yes] [--dry-run]",
+    summaryVerb: "marked as unread",
+    dryRunVerb: "mark as unread",
+    onSuccess: (threadId) => `Marked as unread: ${threadId}`,
+    onFailure: (threadId, opError) => `Failed to mark as unread: ${threadId}${opError ? ` (${opError})` : ""}`,
+    run: markAsUnread,
+  });
 }
 
 async function cmdLabels(options: CliOptions) {
-  const conn = await checkConnection(options.port);
+  const conn = await checkConnection(options.port, options.autoLaunch);
   if (!conn) {
     process.exit(1);
   }
@@ -1099,7 +1036,7 @@ async function cmdGetLabels(options: CliOptions) {
     process.exit(1);
   }
 
-  const conn = await checkConnection(options.port);
+  const conn = await checkConnection(options.port, options.autoLaunch);
   if (!conn) {
     process.exit(1);
   }
@@ -1137,30 +1074,15 @@ async function cmdAddLabel(options: CliOptions) {
     process.exit(1);
   }
 
-  const conn = await checkConnection(options.port);
-  if (!conn) {
-    process.exit(1);
-  }
-
-  let successCount = 0;
-  let failCount = 0;
-
-  for (const threadId of options.threadIds) {
-    const result = await addLabel(conn, threadId, options.labelId);
-    if (result.success) {
-      success(`Added label to: ${threadId}`);
-      successCount++;
-    } else {
-      error(`Failed to add label to: ${threadId}${result.error ? ` (${result.error})` : ""}`);
-      failCount++;
-    }
-  }
-
-  if (options.threadIds.length > 1) {
-    log(`\n${successCount} labeled, ${failCount} failed`);
-  }
-
-  await disconnect(conn);
+  await runThreadActionCommand(options, {
+    usage: "Usage: superhuman add-label <thread-id> [thread-id...] --label <label-id> [--yes] [--dry-run]",
+    summaryVerb: "labeled",
+    dryRunVerb: `add label ${options.labelId}`,
+    onSuccess: (threadId) => `Added label to: ${threadId}`,
+    onFailure: (threadId, opError) => `Failed to add label to: ${threadId}${opError ? ` (${opError})` : ""}`,
+    run: (conn, threadId) => addLabel(conn, threadId, options.labelId),
+    extraJson: { labelId: options.labelId },
+  });
 }
 
 async function cmdRemoveLabel(options: CliOptions) {
@@ -1176,100 +1098,41 @@ async function cmdRemoveLabel(options: CliOptions) {
     process.exit(1);
   }
 
-  const conn = await checkConnection(options.port);
-  if (!conn) {
-    process.exit(1);
-  }
-
-  let successCount = 0;
-  let failCount = 0;
-
-  for (const threadId of options.threadIds) {
-    const result = await removeLabel(conn, threadId, options.labelId);
-    if (result.success) {
-      success(`Removed label from: ${threadId}`);
-      successCount++;
-    } else {
-      error(`Failed to remove label from: ${threadId}${result.error ? ` (${result.error})` : ""}`);
-      failCount++;
-    }
-  }
-
-  if (options.threadIds.length > 1) {
-    log(`\n${successCount} updated, ${failCount} failed`);
-  }
-
-  await disconnect(conn);
+  await runThreadActionCommand(options, {
+    usage: "Usage: superhuman remove-label <thread-id> [thread-id...] --label <label-id> [--yes] [--dry-run]",
+    summaryVerb: "updated",
+    dryRunVerb: `remove label ${options.labelId}`,
+    onSuccess: (threadId) => `Removed label from: ${threadId}`,
+    onFailure: (threadId, opError) => `Failed to remove label from: ${threadId}${opError ? ` (${opError})` : ""}`,
+    run: (conn, threadId) => removeLabel(conn, threadId, options.labelId),
+    extraJson: { labelId: options.labelId },
+  });
 }
 
 async function cmdStar(options: CliOptions) {
-  if (options.threadIds.length === 0) {
-    error("At least one thread ID is required");
-    console.log(`Usage: superhuman star <thread-id> [thread-id...]`);
-    process.exit(1);
-  }
-
-  const conn = await checkConnection(options.port);
-  if (!conn) {
-    process.exit(1);
-  }
-
-  let successCount = 0;
-  let failCount = 0;
-
-  for (const threadId of options.threadIds) {
-    const result = await starThread(conn, threadId);
-    if (result.success) {
-      success(`Starred thread: ${threadId}`);
-      successCount++;
-    } else {
-      error(`Failed to star thread: ${threadId}${result.error ? ` (${result.error})` : ""}`);
-      failCount++;
-    }
-  }
-
-  if (options.threadIds.length > 1) {
-    log(`\n${successCount} starred, ${failCount} failed`);
-  }
-
-  await disconnect(conn);
+  await runThreadActionCommand(options, {
+    usage: "Usage: superhuman star <thread-id> [thread-id...] [--yes] [--dry-run]",
+    summaryVerb: "starred",
+    dryRunVerb: "star",
+    onSuccess: (threadId) => `Starred thread: ${threadId}`,
+    onFailure: (threadId, opError) => `Failed to star thread: ${threadId}${opError ? ` (${opError})` : ""}`,
+    run: starThread,
+  });
 }
 
 async function cmdUnstar(options: CliOptions) {
-  if (options.threadIds.length === 0) {
-    error("At least one thread ID is required");
-    console.log(`Usage: superhuman unstar <thread-id> [thread-id...]`);
-    process.exit(1);
-  }
-
-  const conn = await checkConnection(options.port);
-  if (!conn) {
-    process.exit(1);
-  }
-
-  let successCount = 0;
-  let failCount = 0;
-
-  for (const threadId of options.threadIds) {
-    const result = await unstarThread(conn, threadId);
-    if (result.success) {
-      success(`Unstarred thread: ${threadId}`);
-      successCount++;
-    } else {
-      error(`Failed to unstar thread: ${threadId}${result.error ? ` (${result.error})` : ""}`);
-      failCount++;
-    }
-  }
-
-  if (options.threadIds.length > 1) {
-    log(`\n${successCount} unstarred, ${failCount} failed`);
-  }
-
-  await disconnect(conn);
+  await runThreadActionCommand(options, {
+    usage: "Usage: superhuman unstar <thread-id> [thread-id...] [--yes] [--dry-run]",
+    summaryVerb: "unstarred",
+    dryRunVerb: "unstar",
+    onSuccess: (threadId) => `Unstarred thread: ${threadId}`,
+    onFailure: (threadId, opError) => `Failed to unstar thread: ${threadId}${opError ? ` (${opError})` : ""}`,
+    run: unstarThread,
+  });
 }
 
 async function cmdStarred(options: CliOptions) {
-  const conn = await checkConnection(options.port);
+  const conn = await checkConnection(options.port, options.autoLaunch);
   if (!conn) {
     process.exit(1);
   }
@@ -1315,67 +1178,33 @@ async function cmdSnooze(options: CliOptions) {
     process.exit(1);
   }
 
-  const conn = await checkConnection(options.port);
-  if (!conn) {
-    process.exit(1);
-  }
-
-  let successCount = 0;
-  let failCount = 0;
-
-  for (const threadId of options.threadIds) {
-    const result = await snoozeThread(conn, threadId, snoozeTime);
-    if (result.success) {
-      success(`Snoozed thread: ${threadId} until ${snoozeTime.toLocaleString()}`);
-      successCount++;
-    } else {
-      error(`Failed to snooze thread: ${threadId}${result.error ? ` (${result.error})` : ""}`);
-      failCount++;
-    }
-  }
-
-  if (options.threadIds.length > 1) {
-    log(`\n${successCount} snoozed, ${failCount} failed`);
-  }
-
-  await disconnect(conn);
+  await runThreadActionCommand(options, {
+    usage: "Usage: superhuman snooze <thread-id> [thread-id...] --until <time> [--yes] [--dry-run]",
+    summaryVerb: "snoozed",
+    dryRunVerb: `snooze until ${snoozeTime.toISOString()}`,
+    onSuccess: (threadId) => `Snoozed thread: ${threadId} until ${snoozeTime.toLocaleString()}`,
+    onFailure: (threadId, opError) => `Failed to snooze thread: ${threadId}${opError ? ` (${opError})` : ""}`,
+    run: (conn, threadId) => snoozeThread(conn, threadId, snoozeTime),
+    extraJson: {
+      until: snoozeTime.toISOString(),
+      untilDisplay: snoozeTime.toLocaleString(),
+    },
+  });
 }
 
 async function cmdUnsnooze(options: CliOptions) {
-  if (options.threadIds.length === 0) {
-    error("At least one thread ID is required");
-    console.log(`Usage: superhuman unsnooze <thread-id> [thread-id...]`);
-    process.exit(1);
-  }
-
-  const conn = await checkConnection(options.port);
-  if (!conn) {
-    process.exit(1);
-  }
-
-  let successCount = 0;
-  let failCount = 0;
-
-  for (const threadId of options.threadIds) {
-    const result = await unsnoozeThread(conn, threadId);
-    if (result.success) {
-      success(`Unsnoozed thread: ${threadId}`);
-      successCount++;
-    } else {
-      error(`Failed to unsnooze thread: ${threadId}${result.error ? ` (${result.error})` : ""}`);
-      failCount++;
-    }
-  }
-
-  if (options.threadIds.length > 1) {
-    log(`\n${successCount} unsnoozed, ${failCount} failed`);
-  }
-
-  await disconnect(conn);
+  await runThreadActionCommand(options, {
+    usage: "Usage: superhuman unsnooze <thread-id> [thread-id...] [--yes] [--dry-run]",
+    summaryVerb: "unsnoozed",
+    dryRunVerb: "unsnooze",
+    onSuccess: (threadId) => `Unsnoozed thread: ${threadId}`,
+    onFailure: (threadId, opError) => `Failed to unsnooze thread: ${threadId}${opError ? ` (${opError})` : ""}`,
+    run: unsnoozeThread,
+  });
 }
 
 async function cmdSnoozed(options: CliOptions) {
-  const conn = await checkConnection(options.port);
+  const conn = await checkConnection(options.port, options.autoLaunch);
   if (!conn) {
     process.exit(1);
   }
@@ -1414,7 +1243,7 @@ async function cmdAttachments(options: CliOptions) {
     process.exit(1);
   }
 
-  const conn = await checkConnection(options.port);
+  const conn = await checkConnection(options.port, options.autoLaunch);
   if (!conn) {
     process.exit(1);
   }
@@ -1449,7 +1278,7 @@ async function cmdDownload(options: CliOptions) {
       process.exit(1);
     }
 
-    const conn = await checkConnection(options.port);
+    const conn = await checkConnection(options.port, options.autoLaunch);
     if (!conn) {
       process.exit(1);
     }
@@ -1460,8 +1289,21 @@ async function cmdDownload(options: CliOptions) {
       const outputPath = options.outputPath || `attachment-${options.attachmentId}`;
       await Bun.write(outputPath, Buffer.from(content.data, "base64"));
       success(`Downloaded: ${outputPath} (${formatFileSize(content.size)})`);
+      emitCommandJson(options, true, {
+        attachmentId: options.attachmentId,
+        messageId: options.messageId,
+        outputPath,
+        size: content.size,
+      });
     } catch (e) {
-      error(`Failed to download: ${(e as Error).message}`);
+      const message = (e as Error).message;
+      error(`Failed to download: ${message}`);
+      process.exitCode = 1;
+      emitCommandJson(options, false, {
+        attachmentId: options.attachmentId,
+        messageId: options.messageId,
+        error: message,
+      });
     }
 
     await disconnect(conn);
@@ -1476,7 +1318,7 @@ async function cmdDownload(options: CliOptions) {
     process.exit(1);
   }
 
-  const conn = await checkConnection(options.port);
+  const conn = await checkConnection(options.port, options.autoLaunch);
   if (!conn) {
     process.exit(1);
   }
@@ -1492,6 +1334,15 @@ async function cmdDownload(options: CliOptions) {
   const outputDir = options.outputPath || ".";
   let successCount = 0;
   let failCount = 0;
+  const results: Array<{
+    attachmentId: string;
+    messageId: string;
+    name: string;
+    success: boolean;
+    outputPath?: string;
+    size?: number;
+    error?: string;
+  }> = [];
 
   for (const att of attachments) {
     try {
@@ -1507,9 +1358,25 @@ async function cmdDownload(options: CliOptions) {
       await Bun.write(outputPath, Buffer.from(content.data, "base64"));
       success(`Downloaded: ${outputPath} (${formatFileSize(content.size)})`);
       successCount++;
+      results.push({
+        attachmentId: att.attachmentId,
+        messageId: att.messageId,
+        name: att.name,
+        success: true,
+        outputPath,
+        size: content.size,
+      });
     } catch (e) {
-      error(`Failed to download ${att.name}: ${(e as Error).message}`);
+      const message = (e as Error).message;
+      error(`Failed to download ${att.name}: ${message}`);
       failCount++;
+      results.push({
+        attachmentId: att.attachmentId,
+        messageId: att.messageId,
+        name: att.name,
+        success: false,
+        error: message,
+      });
     }
   }
 
@@ -1517,11 +1384,25 @@ async function cmdDownload(options: CliOptions) {
     log(`\n${successCount} downloaded, ${failCount} failed`);
   }
 
+  if (failCount > 0) {
+    process.exitCode = 1;
+  }
+
+  emitCommandJson(options, failCount === 0, {
+    threadId: options.threadId,
+    summary: {
+      total: attachments.length,
+      successCount,
+      failCount,
+    },
+    results,
+  });
+
   await disconnect(conn);
 }
 
 async function cmdAccounts(options: CliOptions) {
-  const conn = await checkConnection(options.port);
+  const conn = await checkConnection(options.port, options.autoLaunch);
   if (!conn) {
     process.exit(1);
   }
@@ -1548,7 +1429,7 @@ async function cmdAccount(options: CliOptions) {
     process.exit(1);
   }
 
-  const conn = await checkConnection(options.port);
+  const conn = await checkConnection(options.port, options.autoLaunch);
   if (!conn) {
     process.exit(1);
   }
@@ -1586,6 +1467,10 @@ async function cmdAccount(options: CliOptions) {
   const currentAccount = accounts.find((a) => a.isCurrent);
   if (currentAccount && currentAccount.email === targetEmail) {
     info(`Already on account: ${targetEmail}`);
+    emitCommandJson(options, true, {
+      switched: false,
+      currentAccount: targetEmail,
+    });
     await disconnect(conn);
     return;
   }
@@ -1600,7 +1485,14 @@ async function cmdAccount(options: CliOptions) {
     if (result.email) {
       info(`Current account: ${result.email}`);
     }
+    process.exitCode = 1;
   }
+
+  emitCommandJson(options, result.success, {
+    requestedAccount: targetEmail,
+    currentAccount: result.email,
+    switched: result.success,
+  });
 
   await disconnect(conn);
 }
@@ -1718,7 +1610,7 @@ function formatCalendarEvent(event: CalendarEvent & { account?: string }, showAc
 }
 
 async function cmdCalendar(options: CliOptions) {
-  const conn = await checkConnection(options.port);
+  const conn = await checkConnection(options.port, options.autoLaunch);
   if (!conn) {
     process.exit(1);
   }
@@ -1743,7 +1635,7 @@ async function cmdCalendar(options: CliOptions) {
   if (options.allAccounts) {
     // Get all accounts and query each
     const accounts = await listAccounts(conn);
-    const originalAccount = accounts.find(a => a.current)?.email;
+    const originalAccount = accounts.find((a) => a.isCurrent)?.email;
 
     for (const account of accounts) {
       // Switch to this account
@@ -1808,7 +1700,7 @@ async function cmdCalendarCreate(options: CliOptions) {
     process.exit(1);
   }
 
-  const conn = await checkConnection(options.port);
+  const conn = await checkConnection(options.port, options.autoLaunch);
   if (!conn) {
     process.exit(1);
   }
@@ -1860,15 +1752,18 @@ async function cmdCalendarCreate(options: CliOptions) {
 
   if (result.success) {
     success(`Event created: ${result.eventId}`);
-    if (options.json) {
-      console.log(JSON.stringify(result, null, 2));
-    }
   } else {
     error(`Failed to create event: ${result.error}`);
     if (result.error?.includes("no-auth")) {
       info("Calendar write access may not be authorized in Superhuman");
     }
+    process.exitCode = 1;
   }
+
+  emitCommandJson(options, result.success, {
+    eventId: result.eventId,
+    error: result.error,
+  });
 
   await disconnect(conn);
 }
@@ -1879,7 +1774,7 @@ async function cmdCalendarUpdate(options: CliOptions) {
     process.exit(1);
   }
 
-  const conn = await checkConnection(options.port);
+  const conn = await checkConnection(options.port, options.autoLaunch);
   if (!conn) {
     process.exit(1);
   }
@@ -1920,15 +1815,18 @@ async function cmdCalendarUpdate(options: CliOptions) {
 
   if (result.success) {
     success(`Event updated: ${result.eventId}`);
-    if (options.json) {
-      console.log(JSON.stringify(result, null, 2));
-    }
   } else {
     error(`Failed to update event: ${result.error}`);
     if (result.error?.includes("no-auth")) {
       info("Calendar write access may not be authorized in Superhuman");
     }
+    process.exitCode = 1;
   }
+
+  emitCommandJson(options, result.success, {
+    eventId: result.eventId || options.eventId,
+    error: result.error,
+  });
 
   await disconnect(conn);
 }
@@ -1939,7 +1837,17 @@ async function cmdCalendarDelete(options: CliOptions) {
     process.exit(1);
   }
 
-  const conn = await checkConnection(options.port);
+  if (options.dryRun) {
+    info(`[dry-run] Would delete calendar event: ${options.eventId}`);
+    emitCommandJson(options, true, {
+      eventId: options.eventId,
+      deleted: false,
+      dryRun: true,
+    });
+    return;
+  }
+
+  const conn = await checkConnection(options.port, options.autoLaunch);
   if (!conn) {
     process.exit(1);
   }
@@ -1953,13 +1861,20 @@ async function cmdCalendarDelete(options: CliOptions) {
     if (result.error?.includes("no-auth")) {
       info("Calendar write access may not be authorized in Superhuman");
     }
+    process.exitCode = 1;
   }
+
+  emitCommandJson(options, result.success, {
+    eventId: options.eventId,
+    deleted: result.success,
+    error: result.error,
+  });
 
   await disconnect(conn);
 }
 
 async function cmdCalendarFree(options: CliOptions) {
-  const conn = await checkConnection(options.port);
+  const conn = await checkConnection(options.port, options.autoLaunch);
   if (!conn) {
     process.exit(1);
   }
@@ -1999,13 +1914,34 @@ async function cmdCalendarFree(options: CliOptions) {
 
 async function main() {
   const args = process.argv.slice(2);
+  let options: CliOptions;
 
   if (args.length === 0) {
+    setColorEnabled(true);
     printHelp();
     process.exit(0);
   }
 
-  const options = parseArgs(args);
+  try {
+    options = parseArgs(args);
+  } catch (e) {
+    if (e instanceof CliParseError) {
+      setColorEnabled(true);
+      error(e.message);
+      printHelp();
+      process.exit(1);
+    }
+    throw e;
+  }
+
+  setColorEnabled(!options.noColor);
+
+  if (options.showVersion) {
+    console.log(VERSION);
+    process.exit(0);
+  }
+
+  ensureBulkConfirmation(options);
 
   switch (options.command) {
     case "help":

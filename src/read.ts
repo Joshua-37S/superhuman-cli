@@ -52,7 +52,7 @@ export async function readThread(
             return '';
           };
 
-          return messages.map(msg => {
+          const items = messages.map(msg => {
             const msgDate = msg.rawJson?.date ||
                            (typeof msg.date === 'string' ? msg.date : '');
             return {
@@ -75,13 +75,18 @@ export async function readThread(
               snippet: msg.snippet || '',
             };
           });
+          return { ok: true, messages: items };
         } catch (e) {
-          return [];
+          return { ok: false, error: e?.message || "Failed to read thread" };
         }
       })()
     `,
     returnByValue: true,
   });
 
-  return (result.result.value as ThreadMessage[]) || [];
+  const value = result.result.value as { ok?: boolean; messages?: ThreadMessage[]; error?: string } | null;
+  if (!value?.ok) {
+    throw new Error(value?.error || `Failed to read thread ${threadId}`);
+  }
+  return value.messages || [];
 }

@@ -7,6 +7,14 @@ CLI and MCP server to control [Superhuman](https://superhuman.com) email client 
 - [Bun](https://bun.sh) runtime
 - Superhuman.app running with remote debugging enabled
 
+## Configuration
+
+Optional environment variables:
+
+- `SUPERHUMAN_CDP_PORT` - default CDP port (fallback: `9333`)
+- `SUPERHUMAN_APP_PATH` - path to Superhuman binary (fallback: `/Applications/Superhuman.app/Contents/MacOS/Superhuman`)
+- `SUPERHUMAN_AUTO_LAUNCH` - auto-launch Superhuman when disconnected (`true` by default)
+
 ## Setup
 
 ```bash
@@ -144,6 +152,11 @@ bun src/cli.ts download --attachment <attachment-id> --message <message-id> --ou
 | `--limit <number>` | Number of results (default: 10) |
 | `--json` | Output as JSON |
 | `--port <number>` | CDP port (default: 9333) |
+| `--yes` | Confirm bulk destructive operations |
+| `--dry-run` | Preview destructive operations without making changes |
+| `--no-auto-launch` | Disable auto-launch behavior for the current command |
+| `--no-color` | Disable ANSI color output |
+| `--version` | Print CLI version |
 
 ## MCP Server
 

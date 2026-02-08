@@ -36,8 +36,9 @@ import {
   type CreateEventInput,
   type UpdateEventInput,
 } from "../calendar";
+import { getDefaultCdpPort } from "../config";
 
-const CDP_PORT = 9333;
+const CDP_PORT = getDefaultCdpPort();
 
 /**
  * Shared schema for email composition (draft and send use the same fields)

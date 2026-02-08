@@ -39,6 +39,16 @@ bun src/cli.ts account 2
 bun src/cli.ts account user@example.com
 ```
 
+## Testing
+
+```bash
+# Unit + integration tests
+bun test
+
+# Stable live suite (prints mailbox preconditions first, then runs tests in a fixed order)
+bun run test:live-stable
+```
+
 ### Reading Email
 
 ```bash

@@ -10,6 +10,7 @@
   "scripts": {
     "start": "bun run src/index.ts",
     "test": "bun test",
+    "test:live-stable": "bun run src/test-live-stable.ts",
     "mcp": "bun run src/index.ts --mcp"
   },
   "devDependencies": {

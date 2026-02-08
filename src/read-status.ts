@@ -97,9 +97,36 @@ export async function markAsRead(
             if (!gmail) {
               return { success: false, error: "gmail service not found" };
             }
+            const errors = [];
+            let updated = false;
 
-            // Remove UNREAD label
-            await gmail.changeLabelsPerThread(threadId, [], ['UNREAD']);
+            try {
+              await gmail.changeLabelsPerThread(threadId, [], ['UNREAD']);
+              updated = true;
+            } catch (e) {
+              errors.push('changeLabelsPerThread failed: ' + (e?.message || e));
+            }
+
+            if (!updated) {
+              const messageIds = model.messageIds || [];
+              if (messageIds.length > 0 && typeof gmail.changeLabelsBatch === 'function') {
+                try {
+                  await gmail.changeLabelsBatch(messageIds, [], ['UNREAD']);
+                  updated = true;
+                } catch (e) {
+                  errors.push('changeLabelsBatch failed: ' + (e?.message || e));
+                }
+              } else {
+                errors.push("No message IDs available for Gmail label fallback");
+              }
+            }
+
+            if (!updated) {
+              return {
+                success: false,
+                error: errors.join(" | ") || "Failed to mark thread as read on Gmail"
+              };
+            }
           }
 
           // Update local state for immediate UI feedback
@@ -208,9 +235,36 @@ export async function markAsUnread(
             if (!gmail) {
               return { success: false, error: "gmail service not found" };
             }
+            const errors = [];
+            let updated = false;
 
-            // Add UNREAD label
-            await gmail.changeLabelsPerThread(threadId, ['UNREAD'], []);
+            try {
+              await gmail.changeLabelsPerThread(threadId, ['UNREAD'], []);
+              updated = true;
+            } catch (e) {
+              errors.push('changeLabelsPerThread failed: ' + (e?.message || e));
+            }
+
+            if (!updated) {
+              const messageIds = model.messageIds || [];
+              if (messageIds.length > 0 && typeof gmail.changeLabelsBatch === 'function') {
+                try {
+                  await gmail.changeLabelsBatch(messageIds, ['UNREAD'], []);
+                  updated = true;
+                } catch (e) {
+                  errors.push('changeLabelsBatch failed: ' + (e?.message || e));
+                }
+              } else {
+                errors.push("No message IDs available for Gmail label fallback");
+              }
+            }
+
+            if (!updated) {
+              return {
+                success: false,
+                error: errors.join(" | ") || "Failed to mark thread as unread on Gmail"
+              };
+            }
           }
 
           // Update local state for immediate UI feedback

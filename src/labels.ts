@@ -257,8 +257,38 @@ export async function addLabel(
             if (!gmail) {
               return { success: false, error: "gmail service not found" };
             }
+            const errors = [];
+            let updated = false;
 
-            await gmail.changeLabelsPerThread(threadId, [labelId], []);
+            // Primary path: thread-level label modify
+            try {
+              await gmail.changeLabelsPerThread(threadId, [labelId], []);
+              updated = true;
+            } catch (e) {
+              errors.push('changeLabelsPerThread failed: ' + (e?.message || e));
+            }
+
+            // Fallback path: message-level batch modify for threads where thread modify is flaky
+            if (!updated) {
+              const messageIds = model.messageIds || [];
+              if (messageIds.length > 0 && typeof gmail.changeLabelsBatch === 'function') {
+                try {
+                  await gmail.changeLabelsBatch(messageIds, [labelId], []);
+                  updated = true;
+                } catch (e) {
+                  errors.push('changeLabelsBatch failed: ' + (e?.message || e));
+                }
+              } else {
+                errors.push("No message IDs available for Gmail label fallback");
+              }
+            }
+
+            if (!updated) {
+              return {
+                success: false,
+                error: errors.join(" | ") || "Failed to add label on Gmail"
+              };
+            }
           }
 
           // Update local state
@@ -345,8 +375,61 @@ export async function removeLabel(
             if (!gmail) {
               return { success: false, error: "gmail service not found" };
             }
+            const errors = [];
+            let updated = false;
+            const messageIds = model.messageIds || [];
 
-            await gmail.changeLabelsPerThread(threadId, [], [labelId]);
+            for (let attempt = 0; attempt < 2 && !updated; attempt++) {
+              try {
+                await gmail.changeLabelsPerThread(threadId, [], [labelId]);
+                updated = true;
+              } catch (e) {
+                errors.push('changeLabelsPerThread failed: ' + (e?.message || e));
+              }
+            }
+
+            if (!updated) {
+              if (messageIds.length > 0 && typeof gmail.changeLabelsBatch === 'function') {
+                try {
+                  await gmail.changeLabelsBatch(messageIds, [], [labelId]);
+                  updated = true;
+                } catch (e) {
+                  errors.push('changeLabelsBatch failed: ' + (e?.message || e));
+                }
+              } else {
+                errors.push("No message IDs available for Gmail label fallback");
+              }
+            }
+
+            if (!updated) {
+              return {
+                success: false,
+                error: errors.join(" | ") || "Failed to remove label on Gmail"
+              };
+            }
+
+            // Verify label is actually gone; retries reduce eventual-consistency flakes.
+            for (let attempt = 0; attempt < 3; attempt++) {
+              model.labelIds = (model.labelIds || []).filter(l => l !== labelId);
+
+              const latestModel = ga?.threads?.identityMap?.get?.(threadId)?._threadModel;
+              const stillHasLabel = Boolean(latestModel?.labelIds?.includes(labelId));
+              if (!stillHasLabel) {
+                break;
+              }
+
+              try {
+                await gmail.changeLabelsPerThread(threadId, [], [labelId]);
+              } catch (e) {
+                // Ignore retry errors here; final state check below determines success/failure.
+              }
+              await new Promise((resolve) => setTimeout(resolve, 200));
+            }
+
+            const finalModel = ga?.threads?.identityMap?.get?.(threadId)?._threadModel;
+            if (finalModel?.labelIds?.includes(labelId)) {
+              return { success: false, error: "Label still present after Gmail removal retries" };
+            }
           }
 
           // Update local state

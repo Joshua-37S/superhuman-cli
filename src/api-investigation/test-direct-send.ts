@@ -354,7 +354,7 @@ async function main() {
         console.log("4. Testing Send via Gmail API");
         console.log("-".repeat(40));
 
-        const testEmail = "eddyhu@gmail.com"; // Send to self for testing
+        const testEmail = "user1@example.com"; // Send to self for testing
         const testSubject = "Direct Gmail API Test - " + new Date().toISOString();
         const testBody = "This email was sent directly via the Gmail API, bypassing Superhuman's UI-based draft system.";
 

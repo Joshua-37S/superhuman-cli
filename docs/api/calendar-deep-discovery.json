@@ -116,11 +116,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -136,8 +136,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -172,11 +172,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -192,8 +192,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -228,11 +228,11 @@
             "summary": "Eat the Frog",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -247,8 +247,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -293,7 +293,7 @@
             "sequence": 0,
             "attendees": [
               {
-                "email": "eddyhu@gmail.com",
+                "email": "user1@example.com",
                 "self": true,
                 "responseStatus": "accepted"
               },
@@ -336,8 +336,8 @@
               "useDefault": true
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -421,7 +421,7 @@
             },
             "eventType": "default",
             "calendarId": "3993ad9bd28bcd89c595b7a5eb948ac5844cca0212e03253baa6196e2d68db72@group.calendar.google.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -455,11 +455,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -475,8 +475,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -511,11 +511,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -531,8 +531,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -567,11 +567,11 @@
             "summary": "Eat the Frog",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -586,8 +586,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -667,7 +667,7 @@
             },
             "eventType": "default",
             "calendarId": "3993ad9bd28bcd89c595b7a5eb948ac5844cca0212e03253baa6196e2d68db72@group.calendar.google.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -701,11 +701,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -721,8 +721,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -757,11 +757,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -777,8 +777,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -813,11 +813,11 @@
             "summary": "Eat the Frog",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -832,8 +832,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -921,7 +921,7 @@
             },
             "eventType": "default",
             "calendarId": "3993ad9bd28bcd89c595b7a5eb948ac5844cca0212e03253baa6196e2d68db72@group.calendar.google.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -955,11 +955,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -975,8 +975,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -1011,11 +1011,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -1031,8 +1031,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -1067,11 +1067,11 @@
             "summary": "Eat the Frog",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -1086,8 +1086,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -1124,11 +1124,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -1144,8 +1144,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -1180,11 +1180,11 @@
             "summary": "Eat the Frog",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -1199,8 +1199,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -1250,7 +1250,7 @@
                 "responseStatus": "accepted"
               },
               {
-                "email": "eddyhu@gmail.com",
+                "email": "user1@example.com",
                 "self": true,
                 "responseStatus": "needsAction"
               }
@@ -1277,8 +1277,8 @@
               "useDefault": true
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -1327,7 +1327,7 @@
                 "responseStatus": "accepted"
               },
               {
-                "email": "eddyhu@gmail.com",
+                "email": "user1@example.com",
                 "self": true,
                 "responseStatus": "needsAction"
               }
@@ -1354,8 +1354,8 @@
               "useDefault": true
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -1414,7 +1414,7 @@
             },
             "eventType": "default",
             "calendarId": "family11935540803478838785@group.calendar.google.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -1453,11 +1453,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -1473,8 +1473,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -1509,11 +1509,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -1529,8 +1529,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -1565,11 +1565,11 @@
             "summary": "Eat the Frog",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -1584,8 +1584,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -1619,7 +1619,7 @@
             "updated": "2026-01-19T17:37:29.222Z",
             "summary": "Chiro",
             "creator": {
-              "email": "eddyhu@gmail.com"
+              "email": "user1@example.com"
             },
             "organizer": {
               "email": "family11935540803478838785@group.calendar.google.com",
@@ -1635,7 +1635,7 @@
             },
             "eventType": "default",
             "calendarId": "family11935540803478838785@group.calendar.google.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -1719,7 +1719,7 @@
             },
             "eventType": "default",
             "calendarId": "3993ad9bd28bcd89c595b7a5eb948ac5844cca0212e03253baa6196e2d68db72@group.calendar.google.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -1753,11 +1753,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -1773,8 +1773,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -1809,11 +1809,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -1829,8 +1829,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -1865,11 +1865,11 @@
             "summary": "Eat the Frog",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -1884,8 +1884,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -1965,7 +1965,7 @@
             },
             "eventType": "default",
             "calendarId": "3993ad9bd28bcd89c595b7a5eb948ac5844cca0212e03253baa6196e2d68db72@group.calendar.google.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -1999,11 +1999,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -2019,8 +2019,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -2055,11 +2055,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -2075,8 +2075,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -2111,11 +2111,11 @@
             "summary": "Eat the Frog",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -2130,8 +2130,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -2219,7 +2219,7 @@
             },
             "eventType": "default",
             "calendarId": "3993ad9bd28bcd89c595b7a5eb948ac5844cca0212e03253baa6196e2d68db72@group.calendar.google.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -2253,11 +2253,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -2273,8 +2273,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -2309,11 +2309,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -2329,8 +2329,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -2365,11 +2365,11 @@
             "summary": "Eat the Frog",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -2384,8 +2384,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -2422,11 +2422,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -2442,8 +2442,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -2478,11 +2478,11 @@
             "summary": "Eat the Frog",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -2497,8 +2497,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -2557,7 +2557,7 @@
             },
             "eventType": "default",
             "calendarId": "family11935540803478838785@group.calendar.google.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -2611,7 +2611,7 @@
             },
             "eventType": "default",
             "calendarId": "family11935540803478838785@group.calendar.google.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -2650,11 +2650,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -2670,8 +2670,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -2706,11 +2706,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -2726,8 +2726,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -2762,11 +2762,11 @@
             "summary": "Eat the Frog",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -2781,8 +2781,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -2870,7 +2870,7 @@
             },
             "eventType": "default",
             "calendarId": "3993ad9bd28bcd89c595b7a5eb948ac5844cca0212e03253baa6196e2d68db72@group.calendar.google.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -2904,11 +2904,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -2924,8 +2924,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -2960,11 +2960,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -2980,8 +2980,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -3016,11 +3016,11 @@
             "summary": "Eat the Frog",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -3035,8 +3035,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -3116,7 +3116,7 @@
             },
             "eventType": "default",
             "calendarId": "3993ad9bd28bcd89c595b7a5eb948ac5844cca0212e03253baa6196e2d68db72@group.calendar.google.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -3150,11 +3150,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -3170,8 +3170,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -3206,11 +3206,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -3226,8 +3226,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -3262,11 +3262,11 @@
             "summary": "Eat the Frog",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -3281,8 +3281,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -3370,7 +3370,7 @@
             },
             "eventType": "default",
             "calendarId": "3993ad9bd28bcd89c595b7a5eb948ac5844cca0212e03253baa6196e2d68db72@group.calendar.google.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -3404,11 +3404,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -3424,8 +3424,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -3460,11 +3460,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -3480,8 +3480,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -3516,11 +3516,11 @@
             "summary": "Eat the Frog",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -3535,8 +3535,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -3573,11 +3573,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -3593,8 +3593,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -3629,11 +3629,11 @@
             "summary": "Eat the Frog",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -3648,8 +3648,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -3702,7 +3702,7 @@
                 "responseStatus": "accepted"
               },
               {
-                "email": "eddyhu@gmail.com",
+                "email": "user1@example.com",
                 "self": true,
                 "responseStatus": "needsAction"
               }
@@ -3729,8 +3729,8 @@
               "useDefault": true
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -3789,7 +3789,7 @@
             },
             "eventType": "default",
             "calendarId": "family11935540803478838785@group.calendar.google.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -3843,7 +3843,7 @@
             "sequence": 0,
             "eventType": "default",
             "calendarId": "en.usa#holiday@group.v.calendar.google.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": true,
             "rawStart": {
@@ -3875,11 +3875,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -3895,8 +3895,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -3931,11 +3931,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -3951,8 +3951,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -3987,11 +3987,11 @@
             "summary": "Eat the Frog",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -4006,8 +4006,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -4041,11 +4041,11 @@
             "updated": "2025-12-03T16:19:17.798Z",
             "summary": "UVA Riverside Appointment",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -4057,8 +4057,8 @@
               "useDefault": true
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -4106,7 +4106,7 @@
             "sequence": 0,
             "eventType": "default",
             "calendarId": "en.usa#holiday@group.v.calendar.google.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": true,
             "rawStart": {
@@ -4188,7 +4188,7 @@
             },
             "eventType": "default",
             "calendarId": "3993ad9bd28bcd89c595b7a5eb948ac5844cca0212e03253baa6196e2d68db72@group.calendar.google.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -4222,11 +4222,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -4242,8 +4242,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -4278,11 +4278,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -4298,8 +4298,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -4334,11 +4334,11 @@
             "summary": "Eat the Frog",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -4353,8 +4353,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -4404,7 +4404,7 @@
                 "responseStatus": "accepted"
               },
               {
-                "email": "eddyhu@gmail.com",
+                "email": "user1@example.com",
                 "self": true,
                 "responseStatus": "needsAction"
               }
@@ -4431,8 +4431,8 @@
               "useDefault": true
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -4508,7 +4508,7 @@
             },
             "eventType": "default",
             "calendarId": "3993ad9bd28bcd89c595b7a5eb948ac5844cca0212e03253baa6196e2d68db72@group.calendar.google.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -4542,11 +4542,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -4562,8 +4562,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -4598,11 +4598,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -4618,8 +4618,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -4654,11 +4654,11 @@
             "summary": "Eat the Frog",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -4673,8 +4673,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -4762,7 +4762,7 @@
             },
             "eventType": "default",
             "calendarId": "3993ad9bd28bcd89c595b7a5eb948ac5844cca0212e03253baa6196e2d68db72@group.calendar.google.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -4796,11 +4796,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -4816,8 +4816,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -4852,11 +4852,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -4872,8 +4872,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -4908,11 +4908,11 @@
             "summary": "Eat the Frog",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -4927,8 +4927,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -4965,11 +4965,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -4985,8 +4985,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -5021,11 +5021,11 @@
             "summary": "Eat the Frog",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -5040,8 +5040,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -5100,7 +5100,7 @@
             },
             "eventType": "default",
             "calendarId": "family11935540803478838785@group.calendar.google.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -5154,7 +5154,7 @@
             },
             "eventType": "default",
             "calendarId": "family11935540803478838785@group.calendar.google.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -5193,11 +5193,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -5213,8 +5213,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -5249,11 +5249,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -5269,8 +5269,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -5305,11 +5305,11 @@
             "summary": "Eat the Frog",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -5324,8 +5324,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -5413,7 +5413,7 @@
             },
             "eventType": "default",
             "calendarId": "3993ad9bd28bcd89c595b7a5eb948ac5844cca0212e03253baa6196e2d68db72@group.calendar.google.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -5447,11 +5447,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -5467,8 +5467,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -5503,11 +5503,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -5523,8 +5523,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -5559,11 +5559,11 @@
             "summary": "Eat the Frog",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -5578,8 +5578,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -5659,7 +5659,7 @@
             },
             "eventType": "default",
             "calendarId": "3993ad9bd28bcd89c595b7a5eb948ac5844cca0212e03253baa6196e2d68db72@group.calendar.google.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -5693,11 +5693,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -5713,8 +5713,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -5749,11 +5749,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -5769,8 +5769,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -5805,11 +5805,11 @@
             "summary": "Eat the Frog",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -5824,8 +5824,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -5913,7 +5913,7 @@
             },
             "eventType": "default",
             "calendarId": "3993ad9bd28bcd89c595b7a5eb948ac5844cca0212e03253baa6196e2d68db72@group.calendar.google.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -5947,11 +5947,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -5967,8 +5967,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -6003,11 +6003,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -6023,8 +6023,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -6059,11 +6059,11 @@
             "summary": "Eat the Frog",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -6078,8 +6078,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -6113,11 +6113,11 @@
             "updated": "2026-01-14T17:09:41.851Z",
             "summary": "90 Days to Lease End EV9",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -6129,8 +6129,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": true,
             "rawStart": {
@@ -6161,11 +6161,11 @@
             "summary": "Shallow Work",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -6181,8 +6181,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -6217,11 +6217,11 @@
             "summary": "Eat the Frog",
             "description": "#morgen-routine",
             "creator": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "organizer": {
-              "email": "eddyhu@gmail.com",
+              "email": "user1@example.com",
               "self": true
             },
             "start": {},
@@ -6236,8 +6236,8 @@
               "useDefault": false
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -6290,7 +6290,7 @@
                 "responseStatus": "accepted"
               },
               {
-                "email": "eddyhu@gmail.com",
+                "email": "user1@example.com",
                 "self": true,
                 "responseStatus": "needsAction"
               }
@@ -6317,8 +6317,8 @@
               "useDefault": true
             },
             "eventType": "default",
-            "calendarId": "eddyhu@gmail.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "calendarId": "user1@example.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -6377,7 +6377,7 @@
             },
             "eventType": "default",
             "calendarId": "family11935540803478838785@group.calendar.google.com",
-            "accountEmail": "eddyhu@gmail.com",
+            "accountEmail": "user1@example.com",
             "source": "api",
             "allDay": false,
             "rawStart": {
@@ -6416,7 +6416,7 @@
         "3993ad9bd28bcd89c595b7a5eb948ac5844cca0212e03253baa6196e2d68db72@group.calendar.google.com": "lime",
         "": "",
         "addressbook#contacts@group.v.calendar.google.com": "green",
-        "eddyhu@gmail.com": "navy",
+        "user1@example.com": "navy",
         "en.usa#holiday@group.v.calendar.google.com": "green",
         "family11935540803478838785@group.calendar.google.com": "cobalt",
         "i0obqf4scdc2930q1ie9dk1mro@group.calendar.google.com": "cinnamon",
@@ -6443,7 +6443,7 @@
             "enabledIOS": false,
             "enabledAndroid": false
           },
-          "id": "eddyhu@gmail.com",
+          "id": "user1@example.com",
           "sync": true,
           "show": true,
           "color": "navy"
@@ -6475,7 +6475,7 @@
       ],
       "list": [
         {
-          "account": "eddyhu@gmail.com",
+          "account": "user1@example.com",
           "provider": "google",
           "kind": "calendar#calendarListEntry",
           "etag": "\"1643636688849000\"",
@@ -6497,14 +6497,14 @@
           }
         },
         {
-          "account": "eddyhu@gmail.com",
+          "account": "user1@example.com",
           "provider": "google",
           "kind": "calendar#calendarListEntry",
           "etag": "\"1726517327516000\"",
           "id": "family11935540803478838785@group.calendar.google.com",
           "summary": "Family",
           "timeZone": "UTC",
-          "dataOwner": "eddyhu@gmail.com",
+          "dataOwner": "user1@example.com",
           "summaryOverride": "Family",
           "colorId": "17",
           "backgroundColor": "#9a9cff",
@@ -6519,7 +6519,7 @@
           }
         },
         {
-          "account": "eddyhu@gmail.com",
+          "account": "user1@example.com",
           "provider": "google",
           "kind": "calendar#calendarListEntry",
           "etag": "\"1726965099686000\"",
@@ -6540,14 +6540,14 @@
           }
         },
         {
-          "account": "eddyhu@gmail.com",
+          "account": "user1@example.com",
           "provider": "google",
           "kind": "calendar#calendarListEntry",
           "etag": "\"1744948968922719\"",
           "id": "5b2cd972226fd8f6bf4c2df51364441a8395bf17104ebf1e27508b6059d18a2a@group.calendar.google.com",
           "summary": "Work",
           "timeZone": "America/New_York",
-          "dataOwner": "eddyhu@gmail.com",
+          "dataOwner": "user1@example.com",
           "colorId": "4",
           "backgroundColor": "#fa573c",
           "foregroundColor": "#000000",
@@ -6561,11 +6561,11 @@
           }
         },
         {
-          "account": "eddyhu@gmail.com",
+          "account": "user1@example.com",
           "provider": "google",
           "kind": "calendar#calendarListEntry",
           "etag": "\"1749254306322607\"",
-          "id": "eddyhu@gmail.com",
+          "id": "user1@example.com",
           "summary": "Gmail",
           "timeZone": "America/New_York",
           "colorId": "8",
@@ -6582,7 +6582,7 @@
           }
         },
         {
-          "account": "eddyhu@gmail.com",
+          "account": "user1@example.com",
           "provider": "google",
           "kind": "calendar#calendarListEntry",
           "etag": "\"1762277437011375\"",
@@ -6604,14 +6604,14 @@
       ],
       "writableCalendars": [
         {
-          "account": "eddyhu@gmail.com",
+          "account": "user1@example.com",
           "provider": "google",
           "kind": "calendar#calendarListEntry",
           "etag": "\"1726517327516000\"",
           "id": "family11935540803478838785@group.calendar.google.com",
           "summary": "Family",
           "timeZone": "UTC",
-          "dataOwner": "eddyhu@gmail.com",
+          "dataOwner": "user1@example.com",
           "summaryOverride": "Family",
           "colorId": "17",
           "backgroundColor": "#9a9cff",
@@ -6626,7 +6626,7 @@
           }
         },
         {
-          "account": "eddyhu@gmail.com",
+          "account": "user1@example.com",
           "provider": "google",
           "kind": "calendar#calendarListEntry",
           "etag": "\"1726965099686000\"",
@@ -6647,14 +6647,14 @@
           }
         },
         {
-          "account": "eddyhu@gmail.com",
+          "account": "user1@example.com",
           "provider": "google",
           "kind": "calendar#calendarListEntry",
           "etag": "\"1744948968922719\"",
           "id": "5b2cd972226fd8f6bf4c2df51364441a8395bf17104ebf1e27508b6059d18a2a@group.calendar.google.com",
           "summary": "Work",
           "timeZone": "America/New_York",
-          "dataOwner": "eddyhu@gmail.com",
+          "dataOwner": "user1@example.com",
           "colorId": "4",
           "backgroundColor": "#fa573c",
           "foregroundColor": "#000000",
@@ -6668,11 +6668,11 @@
           }
         },
         {
-          "account": "eddyhu@gmail.com",
+          "account": "user1@example.com",
           "provider": "google",
           "kind": "calendar#calendarListEntry",
           "etag": "\"1749254306322607\"",
-          "id": "eddyhu@gmail.com",
+          "id": "user1@example.com",
           "summary": "Gmail",
           "timeZone": "America/New_York",
           "colorId": "8",
@@ -6689,7 +6689,7 @@
           }
         },
         {
-          "account": "eddyhu@gmail.com",
+          "account": "user1@example.com",
           "provider": "google",
           "kind": "calendar#calendarListEntry",
           "etag": "\"1762277437011375\"",

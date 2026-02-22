@@ -8,7 +8,7 @@ import { loadTokensFromDisk, getCachedToken } from "../token-api";
 async function debugAPI() {
   await loadTokensFromDisk();
   
-  const email = "eddyhu@gmail.com";
+  const email = "user1@example.com";
   const token = await getCachedToken(email);
   
   if (!token) {

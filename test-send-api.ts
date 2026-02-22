@@ -13,7 +13,7 @@ async function main() {
 
   const timestamp = new Date().toLocaleTimeString();
   const result = await sendEmail(conn, {
-    to: ["eddyhu@gmail.com"],
+    to: ["user1@example.com"],
     subject: `API Send Test ${timestamp}`,
     body: "<p>This email was sent via direct Gmail API call, bypassing the UI entirely!</p><p>If you see this, the server-side send works!</p>",
     isHtml: true,

@@ -10,7 +10,7 @@ async function testNativeDrafts() {
   console.log("Loading tokens...");
   await loadTokensFromDisk();
   
-  const email = "eddyhu@gmail.com";
+  const email = "user1@example.com";
   const token = await getCachedToken(email);
   
   if (!token) {
